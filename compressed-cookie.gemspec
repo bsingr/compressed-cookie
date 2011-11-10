@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "compressed_cookie/version"
 
 Gem::Specification.new do |s|
-  s.name        = "compressed_cookie"
+  s.name        = "compressed-cookie"
   s.version     = CompressedCookie::VERSION
   s.authors     = ["Jens Bissinger"]
   s.email       = ["mail@jens-bissinger.de"]
@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Minimize your cookie footprint'}
   s.description = %q{Provides basically just a wrapper class around key-based cookie accessors}
 
-  s.rubyforge_project = "compressed_cookie"
+  s.rubyforge_project = "compressed-cookie"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
