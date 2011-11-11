@@ -82,6 +82,23 @@ describe 'CompressedCookie' do
         @cookie_mock.should == ['new-foo', 'new-bar', 'new-baz']
       end
     end
+    
+    describe 'limited access block methods' do
+      it 'should allow write access via #write' do
+        SimpleCookieMock.write(@cookie_mock) do |writer|
+          writer.one = 'new-bar'
+        end
+        @cookie_mock.should == ['foo', 'new-bar']
+      end
+      it 'should not allow write access via #read' do
+        #lambda do
+          SimpleCookieMock.read(@cookie_mock) do |reader|
+            reader.one = 'new-bar'
+          end
+        #end.should raise_error(StandardError)
+        @cookie_mock.should == ['foo', 'bar']
+      end
+    end
   end
   
   describe 'nested cookie' do
