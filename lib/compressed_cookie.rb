@@ -19,8 +19,8 @@ class CompressedCookie
   # @param [ #[], #[]= ] cookie object (external) itself
   def initialize(cookie, write_access = false)
     @cookie = self.class.initialize_cookie_part(cookie)
-    self.class.define_readers
-    self.class.define_writers if write_access
+    self.extend readers
+    self.extend writers if write_access
   end
   # WRITE
   def self.write(cookie, &block)
@@ -97,17 +97,23 @@ class CompressedCookie
   
 private
   
-  def self.define_readers
-    compressor_keys.each do |method_name, key|
-      define_method("#{method_name}") do
-        @cookie[key]
+  def readers
+    keys = self.class.compressor_keys
+    Module.new do
+      keys.each_pair do |method_name, key|
+        define_method method_name do
+          @cookie[key]
+        end
       end
     end
   end
-  def self.define_writers
-    compressor_keys.each do |method_name, key|
-      define_method("#{method_name}=") do |first_method_arg|
-        @cookie[key] = first_method_arg
+  def writers
+    keys = self.class.compressor_keys
+    Module.new do
+      keys.each_pair do |method_name, key|
+        define_method "#{method_name}=" do |value|
+          @cookie[key] = value
+        end
       end
     end
   end

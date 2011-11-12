@@ -91,11 +91,11 @@ describe 'CompressedCookie' do
         @cookie_mock.should == ['foo', 'new-bar']
       end
       it 'should not allow write access via #read' do
-        #lambda do
+        lambda do
           SimpleCookieMock.read(@cookie_mock) do |reader|
             reader.one = 'new-bar'
           end
-        #end.should raise_error(StandardError)
+        end.should raise_error(NoMethodError)
         @cookie_mock.should == ['foo', 'bar']
       end
     end
