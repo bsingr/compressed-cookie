@@ -10,10 +10,10 @@ class CompressedCookie
   include CompressedCookie::BulkAccessors
   
   ### IMPARATIVE DECLARATIONS ###
-  def self.compressor_keys(hash = nil)
-    @compressor_keys ||= {}
-    @compressor_keys.merge!(hash) if hash
-    @compressor_keys
+  def self.cookie_index(hash = nil)
+    @cookie_index ||= {}
+    @cookie_index.merge!(hash) if hash
+    @cookie_index
   end
   
   ### CONSTRUCTOR ###
@@ -26,8 +26,8 @@ class CompressedCookie
   end
   
   def self.key(name)
-    if compressor_keys.has_key? name
-      compressor_keys[name]
+    if cookie_index.has_key? name
+      cookie_index[name]
     else
       raise UndefinedCompressorKeyError.new "#{self.class} has no compressor key=#{name}"
     end
@@ -36,7 +36,7 @@ class CompressedCookie
 private
   
   def readers
-    keys = self.class.compressor_keys
+    keys = self.class.cookie_index
     Module.new do
       keys.each_pair do |method_name, key|
         define_method method_name do
@@ -46,7 +46,7 @@ private
     end
   end
   def writers
-    keys = self.class.compressor_keys
+    keys = self.class.cookie_index
     Module.new do
       keys.each_pair do |method_name, key|
         define_method "#{method_name}=" do |value|

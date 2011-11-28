@@ -10,8 +10,8 @@ This gem provides a wrapper around key-based cookie accessors.
 
     # define your cookie class
     class MyCookie < CompressedCookie
-      compressor_keys :foo => 0,
-                      :bar => 1
+      cookie_index :foo => 0,
+                   :bar => 1
     end
     
     # use it to write to a raw cookie object

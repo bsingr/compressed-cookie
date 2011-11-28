@@ -3,19 +3,19 @@ require 'spec_helper'
 describe 'CompressedCookie' do
   
   describe 'class declaration api' do
-    it 'should respond to #compressor_keys' do
-      CompressedCookie.should respond_to(:compressor_keys)
+    it 'should respond to #cookie_index' do
+      CompressedCookie.should respond_to(:cookie_index)
     end
-    it 'should respond to #part_of' do
-      CompressedCookie.should respond_to(:part_of)
+    it 'should respond to #parent_cookie' do
+      CompressedCookie.should respond_to(:parent_cookie)
     end
   end
   
   describe 'simple cookie' do
     class SimpleCookieMock < CompressedCookie
-      compressor_keys :zero => 0,
-                      :one => 1,
-                      :two => 2
+      cookie_index :zero => 0,
+                   :one => 1,
+                   :two => 2
     end
     before :each do
       @cookie_mock = [
@@ -103,13 +103,13 @@ describe 'CompressedCookie' do
   
   describe 'nested cookie' do
     class RootCookieMock < CompressedCookie
-      compressor_keys :zero => 0,
-                      :child => 1
+      cookie_index :zero => 0,
+                   :child => 1
     end
     class ChildCookieMock < CompressedCookie
-      part_of RootCookieMock, :child
-      compressor_keys :zero => 0,
-                      :one  => 1
+      parent_cookie RootCookieMock, :child
+      cookie_index :zero => 0,
+                   :one  => 1
     end
     before :each do
       @cookie_mock = [:foo, [:bar, :baz]]

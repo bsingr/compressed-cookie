@@ -4,7 +4,7 @@ describe CompressedCookie::Composition do
   it 'should respond #part_of' do
     mock = Object.new
     mock.extend CompressedCookie::Composition
-    mock.should respond_to(:part_of)
+    mock.should respond_to(:parent_cookie)
   end
 
   it 'should respond #initialize_cookie_part' do

@@ -3,7 +3,7 @@ class CompressedCookie
     ### BULK OPERATIONS ###
     # READ
     def to_hash
-      self.class.compressor_keys.inject({}) do |result, pair|
+      self.class.cookie_index.inject({}) do |result, pair|
         name, key = pair
         result[name] = self.send(name)
         result

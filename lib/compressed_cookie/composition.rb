@@ -1,6 +1,6 @@
 class CompressedCookie
   module Composition
-    def part_of(clazz, key)
+    def parent_cookie(clazz, key)
       @parent_cookie_class = clazz
       @parent_cookie_key = key
     end
