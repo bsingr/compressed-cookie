@@ -77,8 +77,8 @@ describe 'CompressedCookie' do
         @mock.one.should == 'new-bar'
         @cookie_mock.should == ['foo', 'new-bar']
       end
-      it 'should write multiple values via #update!' do
-        @mock.update!(:zero => 'new-foo', :one => 'new-bar', :two => 'new-baz')
+      it 'should write multiple values via #update_attributes' do
+        @mock.update_attributes(:zero => 'new-foo', :one => 'new-bar', :two => 'new-baz')
         @cookie_mock.should == ['new-foo', 'new-bar', 'new-baz']
       end
     end

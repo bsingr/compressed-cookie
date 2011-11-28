@@ -10,7 +10,7 @@ class CompressedCookie
       end
     end
     # WRITE
-    def update!(hash)
+    def update_attributes(hash)
       hash.each do |key, value|
         method_name = "#{key}="
         self.send(method_name, value) if self.respond_to?(method_name)
