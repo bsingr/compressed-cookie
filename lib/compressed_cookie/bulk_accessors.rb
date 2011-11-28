@@ -1,7 +1,7 @@
 class CompressedCookie
-  module BulkAccessors    
-    ### BULK OPERATIONS ###
-    # READ
+  module BulkAccessors
+    # exports all values into a hash 
+    # @return [Hash] hash
     def to_hash
       self.class.cookie_index.inject({}) do |result, pair|
         name, key = pair
@@ -9,7 +9,9 @@ class CompressedCookie
         result
       end
     end
-    # WRITE
+    
+    # updates all values via hash by using setter methods
+    # @param [Hash] hash
     def update_attributes(hash)
       hash.each do |key, value|
         method_name = "#{key}="

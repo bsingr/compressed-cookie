@@ -1,6 +1,9 @@
 class CompressedCookie
   module BlockAccessors
-    # WRITE
+    # provides a CompressedCookie with read + write access
+    # @param [#[], #[]=] external cookie object
+    # @param [Proc] optional block (will receive the cookie accessor)
+    # @return [CompressedCookie, Object] when no block is 
     def write(cookie, &block)
       writer = self.new(cookie, true)
       # return the block's return value
@@ -11,7 +14,11 @@ class CompressedCookie
         writer
       end
     end
-    # READ
+    
+    # provides a CompressedCookie with read access
+    # @param [#[]] external cookie object
+    # @param [Proc] optional block (will receive the cookie accessor)
+    # @return [CompressedCookie, Object] when no block is
     def read(cookie, &block)
       reader = self.new(cookie)
       # return the block's return value

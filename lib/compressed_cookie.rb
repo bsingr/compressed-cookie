@@ -9,22 +9,25 @@ class CompressedCookie
   extend CompressedCookie::BlockAccessors
   include CompressedCookie::BulkAccessors
   
-  ### IMPARATIVE DECLARATIONS ###
+  # the index used for storing/retrieving values in a cookie
+  # @param [Hash] partial cookie index that will be merged in (optional)
+  # @return [Hash] cookie index
   def self.cookie_index(hash = nil)
     @cookie_index ||= {}
     @cookie_index.merge!(hash) if hash
     @cookie_index
   end
   
-  ### CONSTRUCTOR ###
-  # default
   # @param [ #[], #[]= ] cookie object (external) itself
+  # @param [ TrueClass, FalseClass ] true, when write access is required 
   def initialize(cookie, write_access = false)
     @cookie = self.class.initialize_cookie_part(cookie)
     self.extend readers
     self.extend writers if write_access
   end
   
+  # @param [Symbol] attribute name
+  # @return [Fixnum] attribute index
   def self.key(name)
     if cookie_index.has_key? name
       cookie_index[name]
@@ -35,6 +38,8 @@ class CompressedCookie
   
 private
   
+  # creates a module that provides attribute readers
+  # @return [Module] readers 
   def readers
     keys = self.class.cookie_index
     Module.new do
@@ -45,6 +50,9 @@ private
       end
     end
   end
+  
+  # creates a module that provides attribute writers
+  # @return [Module] writers
   def writers
     keys = self.class.cookie_index
     Module.new do
